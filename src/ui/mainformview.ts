@@ -1,4 +1,7 @@
-import { icons } from 'ckeditor5/src/core';
+/* eslint-disable-next-line ckeditor5-rules/allow-imports-only-from-main-package-entry-point, ckeditor5-rules/ckeditor-imports */
+import checkIcon from '@ckeditor/ckeditor5-core/theme/icons/check.svg';
+/* eslint-disable-next-line ckeditor5-rules/allow-imports-only-from-main-package-entry-point, ckeditor5-rules/ckeditor-imports */
+import cancelIcon from '@ckeditor/ckeditor5-core/theme/icons/cancel.svg';
 import {
 	ButtonView,
 	createLabeledInputText,
@@ -17,8 +20,6 @@ import { extractDelimiters, hasDelimiters } from '../utils';
 import MathView from './mathview';
 import '../../theme/mathform.css';
 import type { KatexOptions } from '../typings-external';
-
-const { check: checkIcon, cancel: cancelIcon } = icons;
 
 class MathInputView extends LabeledFieldView<InputTextView> {
 	public value: null | string = null;
