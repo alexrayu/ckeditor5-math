@@ -35,17 +35,17 @@ export default class MathEditing extends Plugin {
 	public init(): void {
 		const editor = this.editor;
 		editor.commands.add( 'math', new MathCommand( editor ) );
-
 		this._defineSchema();
 		this._defineConverters();
-
+		const mathConfig = editor.config.get( 'math' )!;
 		editor.editing.mapper.on(
 			'viewToModelPosition',
 			viewToModelPositionOutsideModelElement(
 				editor.model,
-				viewElement => viewElement.hasClass( 'math' )
+				viewElement => viewElement.hasClass( mathConfig.className || 'math-tex' )
 			)
 		);
+
 	}
 
 	private _defineSchema() {
