@@ -19,33 +19,32 @@ export default class MathEditing extends Plugin {
 	}
 
 	constructor( editor: Editor ) {
-		super( editor );
-		editor.config.define( 'math', {
+        super( editor );
+        editor.config.define( 'math', {
 			engine: 'mathjax',
-			outputType: 'script',
+			outputType: 'span',
 			className: 'math-tex',
-			forceOutputType: false,
-			enablePreview: true,
-			previewClassName: [],
-			popupClassName: [],
-			katexRenderOptions: {}
-		} );
-	}
+			forceOutputType: true,
+            enablePreview: true,
+            previewClassName: [],
+            popupClassName: [],
+            katexRenderOptions: {}
+        } );
+    }
 
 	public init(): void {
 		const editor = this.editor;
 		editor.commands.add( 'math', new MathCommand( editor ) );
 		this._defineSchema();
 		this._defineConverters();
-		const mathConfig = editor.config.get( 'math' )!;
+		const mathConfig = editor.config.get( 'math' ) ?? {};
 		editor.editing.mapper.on(
 			'viewToModelPosition',
 			viewToModelPositionOutsideModelElement(
 				editor.model,
-				viewElement => viewElement.hasClass( mathConfig.className || 'math-tex' )
+				viewElement => viewElement.hasClass( mathConfig?.className ?? 'math-tex' )
 			)
 		);
-
 	}
 
 	private _defineSchema() {
@@ -271,7 +270,8 @@ export default class MathEditing extends Plugin {
 				throw new CKEditorError( 'missing-equation', { pluginName: 'math' } );
 			}
 
-			const type = modelItem.getAttribute( 'type' );
+			// Prefer the model's type attribute, but fall back to the configured outputType.
+			const type = String( modelItem.getAttribute( 'type' ) || mathConfig.outputType );
 			const display = modelItem.getAttribute( 'display' );
 
 			if ( type === 'span' ) {

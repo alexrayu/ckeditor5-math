@@ -37,6 +37,7 @@ module.exports = {
 		"ckeditor5-rules/use-require-for-debug-mode-imports": "off",
 
 		"no-void": ["error", { allowAsStatement: true }],
+		'indent': 'off',
 	},
 	overrides: [
 		{
